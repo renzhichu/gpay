@@ -1,0 +1,217 @@
+<!--发货信息 todo...-->
+<form name="info" data-ng-show="vm.addRecordStatus.type == 'addOrderInfo' || vm.addRecordStatus.type == 'editOrderInfo'">
+  <div class="info-modal">
+      <div class="modal-header" style="border-bottom:none;">
+        <a href="" class="close" title="关闭" ng-click="vm.close()"><i class=" fa fa-times"></i></a>
+        <h4 class="text-left" ng-hide = true>补录信息</h4>
+        <h4 class="text-left">补录发货信息</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="row-frame form-inline row-wid">
+          <div class="form-inline addCpList input-word">
+            <label class="labelMax1"><span class="require-star">*</span>券码：</label>
+            <input type="text" class="form-control" placeholder="券码" data-ng-model="vm.filter.couponCode" data-ng-disabled="vm.addRecordStatus.type == 'editOrderInfo'" name="couponCode" ng-pattern="/^[0-9]\d{0,50}$/" ng-minlength="1" ng-maxlength="50" required>
+          </div>
+
+          <div class="input-info word-hint form-inline" ng-show="vm.filter.couponCode.length>0 && vm.filter.couponCode.length<50">
+            <span>{{vm.filter.couponCode.length || 1}}/50</span>
+            <span class="desc-info">（最多50个数字）</span>
+          </div>        
+
+          <div ng-messages="info.couponCode.$error" class="col-sm-4 error-info word-hint form-inline">
+            <p class="discount-help-block" ng-message="minlength || maxlength">
+              <i class="fa fa-info-circle"></i> 请输入长度1-50的数字
+            </p>
+          </div>
+        </div>
+
+        <div class="row-frame form-inline row-wid">        
+          <div class="form-inline addCpList input-word">
+            <label class="labelMax1"><span class="require-star">*</span>手机号码：</label>
+            <input type="text" class="form-control" placeholder="手机号码" name="mobileNumber" data-ng-model="vm.filter.mobileNumber" ng-pattern="/^1[34587]\d{9}$/" ng-minlength="1" ng-maxlength="11" required>
+          </div>
+          <!-- <div class="input-info word-hint form-inline" ng-show="vm.filter.mobileNumber.length>0 && vm.filter.mobileNumber.length<11">
+            <span>{{vm.filter.mobileNumber.length || 1}}/11</span>
+            <span class="desc-info">（最多11个数字）</span>
+          </div> -->
+          <div ng-messages="info.mobileNumber.$error" class="col-sm-4 error-info word-hint form-inline">
+            <p class="discount-help-block" ng-message="minlength || maxlength">
+              <i class="fa fa-info-circle"></i> 请输入正确的手机号码
+            </p>
+          </div>
+        </div>
+
+        <div class="row-frame form-inline row-wid">               
+          <div class="form-inline addCpList input-word">
+            <label class="labelMax1"><span class="require-star">*</span>姓名：</label>
+            <input type="text" class="form-control" placeholder="姓名" name="name"
+                  data-ng-model="vm.filter.name"
+                  ng-minlength="1" ng-maxlength="20" required>
+          </div>
+
+          <div class="input-info word-hint form-inline" ng-show="vm.filter.name.length>0 && vm.filter.name.length<20">
+            <span>{{vm.filter.name.length || 1}}/20</span>
+            <span class="desc-info">（最多20个汉字）</span>
+          </div>
+
+          <div ng-messages="info.name.$error" class="col-sm-4 error-info word-hint form-inline">
+            <p class="discount-help-block" ng-message="minlength || maxlength">
+              <i class="fa fa-info-circle"></i> 姓名长度为1-20个字符
+            </p>
+          </div>
+        </div>
+
+        <div class="row-frame form-inline row-wid">
+          <div class="form-inline addCpList">
+            <label class="labelMax1"><span class="require-star">*</span>证件类型：</label>
+            <select class="form-control"
+                    ng-options="option.value for option in vm.idType  track by option.key"
+                    ng-model="vm.filter.idType"></select>
+          </div>
+        </div>
+
+        <div class="row-frame form-inline row-wid">
+          <div class="form-inline addCpList">
+            <label class="labelMax1"><span class="require-star">*</span>证件号：</label>
+            <input type="text" class="form-control" placeholder="证件号" data-ng-model="vm.filter.idNumber" name="idNumber" required>
+          </div>
+        </div>
+
+        <div class="row-frame form-inline row-wid">
+          <div class="form-inline addCpList input-word" style="width:65%">
+            <label class="labelMax1"><span class="require-star">*</span>收货地址</label>
+            <textarea class="form-control" rows="2" cols="25"
+                      name="shippingAddress"
+                      ng-minlength="1"
+                      ng-maxlength="200"
+                      data-ng-model="vm.filter.shippingAddress" required>
+            </textarea>
+          </div>
+
+          <div class="input-info word-hint form-inline" ng-show="vm.filter.shippingAddress.length>0 && vm.filter.shippingAddress.length<200" style="width:30%;">
+            <span>{{vm.filter.shippingAddress.length || 1}}/200</span>
+            <span class="desc-info">（最多200个字符）</span>
+          </div>
+
+          <div ng-messages="info.shippingAddress.$error" class="col-sm-4 error-info word-hint form-inline" style="width:30%;">
+            <p class="discount-help-block" ng-message="minlength || maxlength">
+              <i class="fa fa-info-circle"></i> 请输入200个字符以内的收货地址
+            </p>
+          </div>
+        </div>
+
+      </div>  
+      <div class="modal-footer" style="text-align:center;">
+
+        <button type="button" class="btn btn-primary btn-sm" data-ng-click="vm.save()" ng-disabled="info.$invalid" ng-if="vm.addRecordStatus.type == 'addOrderInfo'">保存</button>
+
+        <button type="button" class="btn btn-primary btn-sm" data-ng-click="vm.updateSave(row.id)" ng-disabled="info.$invalid" ng-if="vm.addRecordStatus.type == 'editOrderInfo'">保存</button>
+
+        <button type="button" class="btn btn-primary btn-sm" data-ng-click="vm.saveContinue()" ng-disabled="info.$invalid" ng-if="vm.addRecordStatus.type == 'addOrderInfo'">保存&继续</button>
+
+        <button type="button" class="btn btn-primary btn-sm" data-ng-click="vm.updateSaveContinue(row.id)" ng-disabled="info.$invalid" ng-if="vm.addRecordStatus.type == 'editOrderInfo'">保存&继续</button>
+
+        <button type="button" class="btn btn-primary btn-sm" data-ng-click="vm.close()">取消</button>
+      </div>
+  </div>
+</form>
+<!-- 发货信息-->
+
+
+<!--兑奖记录 -->
+<form name="userInfo" data-ng-show="vm.addRecordStatus.type == 'addUserInfo' || vm.addRecordStatus.type == 'editUserInfo'">
+  <div class="info-modal">
+    <div class="modal-header" style="border-bottom:none;">
+      <a href="" class="close" title="关闭" ng-click="vm.close()"><i class=" fa fa-times"></i></a>
+      <h4 class="text-left" ng-hide = true>补录信息</h4>
+      <h4 class="text-left">补录发货信息</h4>
+    </div>
+    <div class="modal-body">
+
+      <div class="row-frame form-inline">
+        <div class="form-inline addCpList input-word">
+          <label class="labelMax1"><span class="require-star">*</span>券码：</label>
+          <input type="text" class="form-control" placeholder="券码" data-ng-model="vm.filter.couponCode" data-ng-disabled="vm.addRecordStatus.type == 'editOrderInfo'" name="couponCode" ng-pattern="/^[0-9]\d{0,50}$/" ng-minlength="1" ng-maxlength="50" required>
+        </div>
+
+        <div class="input-info word-hint form-inline" ng-show="vm.filter.couponCode.length>0 && vm.filter.couponCode.length<50">
+          <span>{{vm.filter.couponCode.length || 1}}/50</span>
+          <span class="desc-info">（最多50个数字）</span>
+        </div>
+
+        <div ng-messages="info.couponCode.$error" class="col-sm-4 error-info word-hint form-inline">
+          <p class="discount-help-block" ng-message="minlength || maxlength">
+            <i class="fa fa-info-circle"></i> 请输入长度1-50的数字
+          </p>
+        </div>
+      </div>
+
+      <div class="row-frame form-inline">
+        <div class="form-inline addCpList input-word">
+          <label class="labelMax1"><span class="require-star">*</span>手机号码：</label>
+          <input type="text" class="form-control" placeholder="手机号码" name="mobileNumber" data-ng-model="vm.filter.mobileNumber" ng-pattern="/^1[34587]\d{9}$/" ng-minlength="1" ng-maxlength="11" required>
+        </div>
+        <!-- <div class="input-info word-hint form-inline" ng-show="vm.filter.mobileNumber.length>0 && vm.filter.mobileNumber.length<11">
+          <span>{{vm.filter.mobileNumber.length || 1}}/11</span>
+          <span class="desc-info">（最多11个数字）</span>
+        </div> -->
+        <div ng-messages="info.mobileNumber.$error" class="col-sm-4 error-info word-hint form-inline">
+          <p class="discount-help-block" ng-message="minlength || maxlength">
+            <i class="fa fa-info-circle"></i> 请输入正确的手机号码
+          </p>
+        </div>
+      </div>
+
+      <div class="row-frame form-inline">
+        <div class="form-inline addCpList input-word">
+          <label class="labelMax1"><span class="require-star">*</span>姓名：</label>
+          <input type="text" class="form-control" placeholder="姓名" name="name"
+                 data-ng-model="vm.filter.name"
+                 ng-minlength="1" ng-maxlength="20" required>
+        </div>
+
+        <div class="input-info word-hint form-inline" ng-show="vm.filter.name.length>0 && vm.filter.name.length<20">
+          <span>{{vm.filter.name.length || 1}}/20</span>
+          <span class="desc-info">（最多20个汉字）</span>
+        </div>
+
+        <div ng-messages="info.name.$error" class="col-sm-4 error-info word-hint form-inline">
+          <p class="discount-help-block" ng-message="minlength || maxlength">
+            <i class="fa fa-info-circle"></i> 姓名长度为1-20个字符
+          </p>
+        </div>
+      </div>
+
+      <div class="row-frame form-inline">
+        <div class="form-inline addCpList">
+          <label class="labelMax1"><span class="require-star">*</span>证件类型：</label>
+          <select class="form-control"
+                  ng-options="option.value for option in vm.idType  track by option.key"
+                  ng-model="vm.filter.idType"></select>
+        </div>
+      </div>
+
+      <div class="row-frame form-inline">
+        <div class="form-inline addCpList">
+          <label class="labelMax1"><span class="require-star">*</span>证件号：</label>
+          <input type="text" class="form-control" placeholder="证件号" data-ng-model="vm.filter.idNumber" name="idNumber" required>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer" style="text-align:center;">
+
+      <button type="button" class="btn btn-primary btn-sm" data-ng-click="vm.saveUserInfo()" ng-disabled="userInfo.$invalid" ng-if="vm.addRecordStatus.type == 'addUserInfo'">保存</button>
+
+      <button type="button" class="btn btn-primary btn-sm" data-ng-click="vm.updateSaveUserInfo(row.id)" ng-disabled="userInfo.$invalid" ng-if="vm.addRecordStatus.type == 'editUserInfo'">保存</button>
+
+      <button type="button" class="btn btn-primary btn-sm" data-ng-click="vm.saveContinueUserInfo()" ng-disabled="userInfo.$invalid" ng-if="vm.addRecordStatus.type == 'addUserInfo'">保存&继续</button>
+
+      <button type="button" class="btn btn-primary btn-sm" data-ng-click="vm.updateSaveContinueUserInfo(row.id)" ng-disabled="userInfo.$invalid" ng-if="vm.addRecordStatus.type == 'editUserInfo'">保存&继续</button>
+
+      <button type="button" class="btn btn-primary btn-sm" data-ng-click="vm.close()">取消</button>
+    </div>
+  </div>
+</form>
+<!-- 兑奖记录-->

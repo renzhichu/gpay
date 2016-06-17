@@ -1,0 +1,39 @@
+<form name="express">
+  <div class="express-modal">
+      <div class="modal-header" style="border-bottom:none;">
+        <a href="" class="close" title="关闭" ng-click="vm.close()"><i class=" fa fa-times"></i></a>
+        <h4 class="text-left">录入快递单</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-inline addCpList">
+          <label class="labelMax1">快递公司：</label>
+          <select class="form-control"
+                  ng-options="option.companyShortName for option in vm.companyShortName track by option.id"
+                  data-ng-model="vm.filter.companyShortName">
+          </select>
+        </div>
+        <div class="row-frame form-inline">
+          <div class="form-inline addCpList input-word">
+            <label class="labelMax1">快递单号：</label>
+            <input type="text" class="form-control" placeholder="快递单号" data-ng-model="vm.filter.trackingNumber" name="trackingNumber" ng-pattern="/^[0-9a-zA-Z]{0,50}$/" ng-minlength="1" ng-maxlength="50" required>
+          </div>
+
+          <div class="input-info word-hint form-inline" ng-show="vm.filter.trackingNumber.length>0 && vm.filter.trackingNumber.length<50">
+            <span>{{vm.filter.trackingNumber.length || 1}}/50</span>
+            <span class="desc-info">（最多50个字符）</span>
+          </div>      
+
+          <div ng-messages="express.trackingNumber.$error" class="col-sm-4 error-info word-hint form-inline">
+            <p class="discount-help-block" ng-message="minlength || maxlength">
+              <i class="fa fa-info-circle"></i> 请输入正确的快递单号
+            </p>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer" style="text-align:center;">
+        <button type="button" class="btn btn-primary btn-sm" data-ng-click="vm.confirmSend(row.id)" ng-disabled="express.$invalid">确认发货</button>
+        <button type="button" class="btn btn-primary btn-sm" data-ng-click="vm.close()">取消</button>
+      </div>
+  </div>
+</form>

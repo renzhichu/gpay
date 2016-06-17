@@ -1,0 +1,123 @@
+<div class="gift-wrap">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">创建应用</h3>
+    </div>
+    <div class="panel-body">
+      <form class="form-horizontal" name="appForm" ng-submit="vm.add()">
+        <!-- appid -->
+        <div class="form-group">
+          <label for="app-id" class="col-sm-2 control-label sm"><span class="require-star">*</span>App_ID：</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="app-id" id="app-id" readonly ng-model="vm.formData.appId" required>
+          </div>
+        </div>
+        <!--/appid -->
+
+        <!-- 密钥 -->
+        <div class="form-group">
+          <label for="secret-key" class="col-sm-2 control-label sm"><span class="require-star">*</span>密钥：</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="secret-key" id="secret-key" readonly ng-model="vm.formData.secretKey" required>
+          </div>
+        </div>
+        <!--/密钥 -->
+
+        <!-- App名称 -->
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label sm"><span class="require-star">*</span>App名称：</label>
+          <div class="col-sm-4">
+            <input 
+              type="text" 
+              class="form-control" 
+              name="name" 
+              id="name" 
+              ng-model="vm.formData.name" 
+              required 
+              ng-minlength="1"
+              ng-maxlength="30"
+              />
+              <errormsg data-form-base="appForm" data-form-key="name">App名称不能为空且在1-30字之间</errormsg>
+          </div>
+        </div>
+        <!-- App名称 -->
+
+        <!-- 应用类型 -->
+        <div class="form-group">
+          <label for="app-type" class="col-sm-2 control-label sm"><span class="require-star">*</span>应用类型：</label>
+          <div class="col-sm-4">
+            <select class="form-control"
+                    ng-options="option.value for option in vm.appTypeEnum  track by option.key"
+                    ng-model="vm.formData.appType"></select>
+          </div>
+        </div>
+        <!--/应用类型 -->
+
+        <!--礼品描述 -->
+        <div class="form-group">
+          <label for="description" class="col-sm-2 control-label sm"><span class="require-star">*</span>应用描述：</label>
+          <div class="col-sm-4">
+            <textarea class="form-control" rows="10" id="description" placeholder="请输入应用描述" name="description" ng-model="vm.formData.description" ng-minlength="10" ng-maxlength="1000"></textarea>
+            <errormsg data-form-base="appForm" data-form-key="description">请输入长度10-1000的字符</errormsg>
+          </div>
+        </div>
+        <!--/礼品描述 -->
+
+        <!-- 应用icon-->
+        <div class="form-group">
+          <label  class="col-sm-2 control-label"><span class="require-star">*</span>礼品图片：</label>
+          <div class="col-sm-10">
+            <a href="javascript:void(0);" class="btn_addpic"
+               ngf-select="vm.uploadFile($file, $invalidFiles)"
+               accept="image/*" ngf-pattern="'.jpg,.jpeg,.png'"
+               ngf-min-width="640"
+               ngf-min-height="640"
+               ngf-max-size="5MB">
+              <span><i class="fa fa-plus-circle fa-lg"></i>上传图片</span>
+              <input type="file" tabindex="3" title="尺寸：640px*640px，单张图片小于5M，支持jpg、jpeg、png格式的图片" size="3"  class="fileprew" >
+            </a>
+            <span class="desc-info">尺寸：640px*640px，单张图片小于5M，支持jpg、jpeg、png格式的图片</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10 thumbnail-preview" >
+            <div class="thumbnails-group" data-ng-repeat="item in vm.giftInfo.pics">
+              <img ng-src="{{item.src}}" class="img-thumbnail">
+              <div class="thumbnails-group-ico">
+                <a href="javascript:void(0)" title="左移动" data-ng-hide="$index == 0 && vm.giftInfo.pics.length == 1"  data-ng-click="vm.offsetLeft($index)" ><i class="fa fa-arrow-circle-left fa-lg"></i></a>
+                <a href="javascript:void(0)" title="右移动" data-ng-hide="$index == 0 && vm.giftInfo.pics.length == 1"  data-ng-click="vm.offsetRight($index)" ><i class="fa fa-arrow-circle-right fa-lg"></i></a>
+                <a href="javascript:void(0)" title="删除"  data-ng-click="vm.delCur($index)"><i class="fa fa-trash-o fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /应用icon-->
+
+        <!-- 接入方式 -->
+        <div class="form-group">
+          <label for="scene" class="col-sm-2 control-label sm"><span class="require-star">*</span>接入方式：</label>
+          <div class="col-sm-4">
+            <select class="form-control"
+                    ng-options="option.value for option in vm.sceneEnum  track by option.key"
+                    ng-model="vm.formData.scene"></select>
+          </div>
+        </div>
+        <!--/接入方式 -->
+
+
+        <!--按钮状态 -->
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary btn-sm" ng-switch="giftForm.form" ng-disabled="giftForm.$invalid || (vm.giftInfo.pics).length == 0">
+              <span ng-switch-default> 创建新应用</span>
+            </button>
+            <button type="button" class="btn btn-primary btn-sm" data-ng-click="vm.resetForm()">重置</button>
+          </div>
+        </div>
+        <!-- /按钮状态 -->
+
+      </form>
+    </div>
+  </div>
+</div>

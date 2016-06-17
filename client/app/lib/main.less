@@ -1,0 +1,78 @@
+@itemWidth:210px;
+@borderColor:#e3e5e7;
+html, body {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .col-999{color:#999;}
+  .title-f16{font-size:16px;}
+  .sub-title{font-size:14px;color:#000;padding-left:10px;}
+  .bp-main{
+    margin: 0 40px;
+    h1{
+      font-size: 22px;font-weight: normal;
+    }
+    .btnBar{
+      .btn{
+        width:100px;height:36px;
+        border:0;
+        border-radius: 0;box-shadow:none;text-shadow: none;
+      }
+    }
+    .bp-form{
+      .row{position: relative;}
+      .col-xs-2{
+        width:@itemWidth;
+      }
+      label{font-weight: normal;}
+      .form-control{
+        width:200px;height:35px;padding:0 12px;border-color: @borderColor;
+        border-radius: 0;box-shadow: none;
+      }
+      .dropdown-toggle{
+        background: none;width:200px;border-radius: 0;box-shadow: none;border-color: @borderColor;
+      }
+      .btnBar{
+        text-align: center;margin: 20px 0;
+        .btn{
+          width:140px;height:40px;font-size: 16px;margin:0 10px;
+        }
+      }
+      .formToggle{
+        width: 36px;height:36px;display: inline-block;position: absolute;bottom:0;right:0;border:1px solid @borderColor;border-radius: 50%;
+      }
+      .formExpand{background: url("../images/form_down.png") no-repeat center center;}
+      .formCollapase{background: url("../images/form_up.png") no-repeat center center;}
+    }
+
+    .btn-default{
+      background:#e8ecf1;
+    }
+    .btn-info{
+      background:#32a7f3;
+    }
+    .btn-success{
+      background: #00c9b8;
+    }
+    .btn-warning{
+      background: #f37232;
+    }
+  }
+  .bootstrap-select.btn-group .dropdown-toggle .caret{
+    border:none;
+    width: 14px;height:8px;
+    background: url("../images/select.png") 0 -8px;
+  }
+  .bootstrap-select.btn-group.dropup.open .dropdown-toggle .caret{
+    background: url("../images/select.png") 0 0;
+  }
+  .dropdown-menu{
+    background: #f6f7f8;
+    border-radius: 0;box-shadow: none;
+  }
+  .dropdown-menu > li > a:hover,
+  .dropdown-menu > li > a:focus{
+    background-image: none;
+    background-color: #fff;
+  }
+}

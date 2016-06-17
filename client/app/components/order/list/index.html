@@ -1,0 +1,88 @@
+<div class="gift-wrap">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">商户管理列表</h3>
+    </div>
+    <div class="panel-body">
+      <div class="bg-info clearfix">
+        <div  class="row">
+          <div class="col-xs-4 form-inline">
+            <label class="labelMax">渠道：</label>
+            <input type="text" class="form-control" ng-model="vm.filter.from" placeholder="渠道">
+          </div>
+          <div class="col-xs-4 form-inline">
+            <label class="labelMax">订单号：</label>
+            <input type="text" data-ng-disabled="true" title="{{vm.userAuth}}" class="form-control" value="{{vm.userAuth && vm.userAuth.storeName}}" data-ng-show="vm.userAuth && vm.userAuth.entityType == 3">
+            <input type="text" data-ng-show="vm.userAuth && vm.userAuth.entityType != 3" ng-model="vm.filter.store" placeholder="请输入订单号"
+                   uib-typeahead="store as store.storeName for store in vm.getSugList($viewValue)"
+                   typeahead-editable="false"
+                   class="form-control">
+          </div>
+        </div>
+        <div  class="row">
+          <div class="col-xs-4 form-inline">
+            <label class="labelMax"><span class="require-star">*</span>订单支付状态：</label>
+            <select class="form-control" ng-model="vm.filter.payStatus">
+              <option ng-repeat="option in vm.payStatusEnum track by option.key" ng-selected="option.key==vm.filter.payStatus" value="{{option.key}}">{{option.value}}</option>  
+            </select>
+          </div>
+
+          <div class="col-xs-4 form-inline">
+            <label class="labelMax"><span class="require-star">*</span>订单退款状态：</label>
+            <select class="form-control" ng-model="vm.filter.refundStatus">
+              <option ng-repeat="option in vm.refundStatusEnum track by option.key" ng-selected="option.key==vm.filter.refundStatus" value="{{option.key}}">{{option.value}}</option>  
+            </select>
+
+          </div>
+          <button class="btn btn-primary btn-sm" ng-click="vm.searchList()">查询 <i class="fa fa-search"></i></button>
+          <button class="btn btn-primary btn-sm" ng-click="vm.resetForm()">重置 </button>
+        </div>
+      </div>
+      <!-- /查询条件 -->
+
+      <!--操作选项 -->
+      <div class="bg-info clearfix">
+        <div class="col-xs-8">
+          <a class="btn btn-primary btn-sm" ng-href="#/refund/list" data-ng-show="vm.userAuth && vm.userAuth.entityType != 3">退款记录 </a>
+          <a class="btn btn-primary btn-sm" ng-href="#/statement/list" data-ng-show="vm.userAuth && vm.userAuth.entityType != 3">结算记录 </a>
+        </div>
+       
+      </div>
+      <!-- /操作选项 -->
+
+      <!-- 表格 -->
+      <table class="table table-striped table-hover table-bordered clearfix" ng-table="vm.tableParams">
+        <thead>
+        <tr>
+          <th> 交易时间 </th>
+          <th> 订单号 </th>
+          <th> 果付订单号 </th>
+          <th> 订单金额（¥） </th>
+          <th> 渠道 </th>
+          <th> 订单支付状态 </th>
+          <th> 退款状态 </th>
+          <th> 操作 </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in $data track by $index">
+          <td> {{row.time}} </td>
+          <td> {{row.orderId}} </td>
+          <td> {{row.guofuId}} </td>
+          <td> {{row.money}}</td>
+          <td> {{row.from | fromText}}</td>
+          <td> {{row.payStatus | payStatusText}}</td>
+          <td> {{row.refundStatus | refundStatusText}}</td>
+          <td>
+            <a  data-ng-show="vm.userAuth && row.refundStatus == 1" ng-href="#/order/edit/{{row.id}}" title="退款" >退款</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <!-- /表格 -->
+      <div class="search-tip" ng-hide="vm.tableParams && (vm.tableParams.data).length != 0">
+        请选择查询条件进行搜索!
+      </div>
+    </div>
+  </div>
+</div>

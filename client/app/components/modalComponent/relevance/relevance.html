@@ -1,0 +1,38 @@
+<div class="modal-default addCoupon-modal">
+    <div class="modal-header">
+      <a href="" class="close" title="关闭" ng-click="vm.close()"><i class=" fa fa-times"></i></a>
+      <h4 class="text-left">礼品关联优惠券</h4>
+    </div>
+    <div class="modal-body">
+      <div class="form-inline addCpList">
+        <label class="labelMax1"><span class="require-star">*</span>优惠券ID：</label>
+        <input type="text" class="form-control" placeholder="优惠券ID" data-ng-model="vm.relevance.couponId" ng-disabled="vm.relevanceid">
+      </div>
+      <div class="form-inline addCpList">
+        <label class="labelMax1"><span class="require-star">*</span>礼品编号：</label>
+        <input type="text" class="form-control" placeholder="礼品编号" data-ng-model="vm.relevance.giftId" ng-disabled="vm.relevanceid">
+      </div>
+      <div class="form-inline addCpList">
+        <label class="labelMax1">标签：</label>
+        <input type="text" class="form-control" placeholder="标签" data-ng-model="vm.relevance.keyword" name="keyword">
+        <span data-ng-show="vm.relevance.keyword.length > 20" class="error-info"> <i class="fa fa-info-circle"></i> 请输入长度1-20的字符</span>
+      </div>
+      <div class="form-inline addCpList">
+        <label class="labelMax1"><span class="require-star">*</span>收集信息类型：</label>
+        <input type="checkbox" name="collectType" data-ng-model="vm.relevance.isCollectClaimPersonInfo" ng-true-value="'1'" ng-false-value="'2'">
+        <span>兑奖人信息</span>
+        <input type="checkbox" name="collectType" data-ng-model="vm.relevance.isCollectShippingInfo" style="margin-left:20px;" ng-true-value="'1'" ng-false-value="'2'">
+        <span>礼品收货信息</span>        
+      </div>
+      <div class="form-inline addCpList">
+        <label class="labelMax1"><span class="require-star">*</span>状态：</label>
+        <select class="form-control"
+                ng-options="option.value for option in vm.couponStatus  track by option.key"
+                ng-model="vm.relevance.couponStatus"></select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a class="btn btn-primary btn-sm" data-ng-click="vm.relevanceCoupon()" ng-disabled="vm.relevance.keyword.length > 20">保存</a>
+      <a class="btn btn-primary btn-sm" data-ng-click="vm.close()">取消</a>
+    </div>
+  </div>

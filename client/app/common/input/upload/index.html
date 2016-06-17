@@ -1,0 +1,21 @@
+<div class="formInfo">
+  <div class="but but32 fileStyle">选择</div><input type="file" class="fileLabel" ngf-select="vm.uploadFile($file, $invalidFiles)" ng-model="vm.nameVal" name="{{vm.nameVal}}" ngf-max-size="5MB" ngf-accept="'image/*'" /><span ng-if="vm.showTip">提示：图片格式支持JPG、JPEG、PNG，每张大小不超过5M，最多{{vm.picMax}}张</span><span ng-transclude></span>
+</div>
+<p class="hintMsg" ng-messages="vm.formBase[vm.nameVal].$error"  ng-show="(vm.formBase.$submitted || vm.formBase[vm.nameVal].$dirty) && vm.formBase[vm.nameVal].$invalid">
+  <em></em>
+  <strong class="errorMsg">请上传图片</strong>
+</p>
+<ul class="upLoadImg clx">
+  <li data-ng-repeat="item in vm.formPics track by $index">
+    <img ng-src="{{vm.siteConfig.img+'norm_100/'+item}}" class="img-thumbnail" title="点击查看大图">
+    <i class="removeIcon" ng-click="vm.removePic($event, $index)" title="移除此图片"></i>
+    <i class="searchIcon" ng-click="vm.viewLarge(item)"></i>
+  </li>
+</ul>
+<div class="imageBox" ng-if="vm.imageBox.isShow==1">
+  <div class="mask"></div>
+  <div class="tipBox">
+    <div class="tipHeader clx"><a href="javascript:void(0);" ng-click="vm.closeLargeView()" class="closeIcon fr">×</a><h4> </h4></div>
+    <img ng-src="{{vm.siteConfig.img+'norm_360/'+vm.imageBox.imagesrc}}">
+  </div>
+</div>

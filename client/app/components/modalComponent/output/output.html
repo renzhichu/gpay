@@ -1,0 +1,105 @@
+<form class="modal-default await-modal" ng-submit="vm.save()">
+  <div class="modal-header">
+    <a href="" class="close" title="关闭" ng-click="vm.close()"><i class=" fa fa-times"></i></a>
+    <h4 class="text-left">应入库划拨礼品</h4>
+  </div>
+  <div class="modal-body">
+    <!--查询条件 -->
+    <div class="giftAddCheck clearfix">
+      <div class="row">
+        <div class="col-xs-6 form-inline" style="width:65%;">
+          <label class="labelMax" style="position:relative;top:10px;left:15px;text-align:right;">出库日期：</label>
+          <div class="form-datetime-container" style="width:400px;position:relative;top:-20px;left:113px;">
+            <div class="col-md-6 dropdown">
+              <a class="dropdown-toggle" id="storageInDateFrom" role="button" data-toggle="dropdown" data-target="#" href="javascript:;">
+                <div class="input-group">
+                  <input type="text" class="form-control datepicker-bgcolor" data-ng-model="vm.filter.storageOutDateFrom" readonly>
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+              </a>
+              <ul class="dropdown-menu" style="left:15px;" role="menu" aria-labelledby="dLabel">
+                <datetimepicker data-ng-model="vm.filter.storageOutDateFrom" data-datetimepicker-config="{dropdownSelector: '#storageInDateFrom',minuteStep: 1,modelType: 'YYYY-MM-DD HH:mm:ss'}"
+                                on-set-time="vm.checkFromTime(newDate)" />
+              </ul>
+            </div>
+            <label class="col-md-1 control-label" style="margin:5px 0px 0px -20px;">至</label>
+            <div class="col-md-6 dropdown stock-output-endtime" style="position:absolute;left:206px;">
+              <a class="dropdown-toggle" id="storageInDateTo" role="button" data-toggle="dropdown" data-target="#" href="javascript:;">
+                <div class="input-group">
+                  <input type="text" class="form-control datepicker-bgcolor" data-ng-model="vm.filter.storageOutDateTo" readonly>
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+              </a>
+              <ul class="dropdown-menu" style="left:15px;" role="menu" aria-labelledby="dLabel">
+                <datetimepicker data-ng-model="vm.filter.storageOutDateTo" data-datetimepicker-config="{ dropdownSelector: '#storageInDateTo' ,minuteStep: 1,modelType: 'YYYY-MM-DD HH:mm:ss'}"
+                                on-set-time="vm.checkToTime(newDate)" />
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4 form-inline" style="margin-top:5px;">
+          <label class="labelMax">入库状态：</label>
+          <select class="form-control" ng-change="vm.changeStorageIn()"
+                  ng-options="option.value for option in vm.isStorageIn  track by option.key"
+                  ng-model="vm.filter.isStorageIn"></select>
+        </div>
+      </div>
+      <div  class="row" style="margin-bottom:20px;">
+        <div class="col-xs-4 form-inline" style="margin-left:55px;">
+          <label>礼品编号：</label>
+          <input type="text" class="form-control" placeholder="礼品编号" data-ng-model="vm.filter.giftId">
+        </div>
+        <div class="col-xs-4 form-inline">
+          <label style="margin-left:-15px;">礼品名称：</label>
+          <input type="text" class="form-control" placeholder="礼品名称" data-ng-model="vm.filter.giftName">
+        </div>
+        <a class="btn btn-primary btn-sm" data-ng-click="vm.searchGift()" style="margin-left:-15px;">筛选 </a>
+      </div>
+    </div>
+    <!-- /查询条件 -->
+    <div class="form-horizontal">
+      <div class="form-group form-giffAdd" style="margin:0px 10px">
+        <table class="table table-striped table-hover table-bordered" ng-table="vm.tableParams">
+          <thead>
+          <tr class="headBlue">
+            <th><input type="checkbox" ng-click="vm.toggleAll()" ng-model="vm.isAllSelected" data-ng-show="vm.filter.isStorageIn.key == '1' ">全选</th>
+            <th>入库状态</th>
+            <th>出库单号</th>
+            <th>礼品编号</th>
+            <th>礼品名称</th>
+            <th>来源门店</th>
+            <th>单位</th>
+            <th>数量</th>
+            <th>单价</th>
+            <th>出库原因</th>
+            <th>经手人</th>
+            <th>实际出库日期</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="row in $data track by $index">
+            <td> <input type="checkbox" data-ng-model="row.selected" ng-change="vm.optionToggled()" data-ng-show="row.isStorageIn == 1"/></td>
+            <td> {{row.isStorageInText}}</td>
+            <td> {{row.storageOutId}} </td>
+            <td> {{row.giftId}} </td>
+            <td> {{row.name}}</td>
+            <td> {{row.storeViewName}} </td>
+            <td> {{row.unit}}</td>
+            <td> {{row.storageOutAmount}}</td>
+            <td> {{row.storageOutUnitPrice}}</td>
+            <td> {{row.storageOutReasonText}}</td>
+            <td> {{row.handler}}</td>
+            <td> {{row.realStorageOutDate* 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary btn-sm" type="submit">
+      确认选择
+    </button>
+    <button class="btn btn-primary btn-sm" type="button" ng-click="vm.close()">取消</button>
+  </div>
+</form>

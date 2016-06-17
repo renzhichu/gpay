@@ -1,0 +1,59 @@
+.gift-modal-default{
+  position: absolute;
+  width: 850px;
+  left: 50%;
+  top: 200px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 1px 1px 12px 3px #666;
+  z-index: 3;
+  -webkit-transition: opacity 3s ease-in-out;
+  -moz-transition: opacity 3s ease-in-out;
+  -o-transition: opacity 3s ease-in-out;
+  transition: opacity 3s ease-in-out;
+  margin-left: -500px;
+
+  .modal-header{
+    padding:5px;
+  }
+  .modal-body{
+    padding: 10px;
+    border-top: 1px solid #dfdfdf;
+    border-bottom: 1px solid #dfdfdf;
+    .giftAddCheck{
+      margin-bottom: 20px;
+    }
+    .headBlue{
+      background-color: #E4EDF7;
+      color: #4989C3;
+      text-align: center;
+    }
+    .form-giffAdd{
+      margin-left: 0;
+      margin-right: 0;
+    }
+    
+    .for-after-line {
+        position: relative;
+        &:after{
+          content: '-';
+          position: absolute;
+          right: -12px;
+          top: 5px;
+        }
+    }
+
+    .cal_pos{
+      position: absolute;
+      top: 0px;
+      left: 360px;
+    }
+
+  }
+  .close{
+    font-size: 18px;
+
+  }
+
+}

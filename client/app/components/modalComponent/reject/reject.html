@@ -1,0 +1,18 @@
+<form name="reject" ng-submit="vm.rejectReason()">
+  <div class="modal-default reject-modal">
+    <div class="modal-header">
+      <a href="" class="close" title="关闭" ng-click="vm.close()"><i class=" fa fa-times"></i></a>
+      <h4 class="text-left">拒绝原因</h4>
+    </div>
+    <div class="modal-body">
+      <div class="form-inline rejectList">
+        <textarea class="form-control" data-ng-model="vm.comment"></textarea>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary btn-sm" type="submit">确认拒绝</button>
+      <button class="btn btn-primary btn-sm" type="button" ng-click="vm.close()">取消</button>
+    </div>
+  </div>
+</form>

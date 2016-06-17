@@ -1,0 +1,58 @@
+<!--<form class="gift-modal-default" name="giftForm" ng-submit="vm.save()"> -->
+<div class="gift-modal-default">
+  <div class="modal-header">
+    <a href="" class="close" title="关闭" ng-click="vm.close()"><i class="fa fa-times"></i></a>
+    <h4 class="text-left">选择礼品</h4>
+  </div>
+  <div class="modal-body">
+    <!--查询条件 -->
+    <div class="giftAddCheck clearfix">
+      <div  class="row">
+        <div class="col-xs-4 form-inline">
+          <label>礼品编号：</label>
+          <input type="text" class="form-control" placeholder="礼品编号" data-ng-model="vm.filter.giftId">
+        </div>
+        <div class="col-xs-4 form-inline">
+          <label>礼品名称：</label>
+          <input type="text" class="form-control" placeholder="礼品名称" data-ng-model="vm.filter.giftName">
+        </div>
+        <button class="btn btn-primary btn-sm" ng-click="vm.searchList()">筛选 </button>
+      </div>
+    </div>
+    <!-- /查询条件 -->
+    <div class="form-horizontal">
+      <div class="form-group form-giffAdd">
+        <table class="table table-striped table-hover table-bordered" ng-table="vm.tableParams">
+          <thead>
+          <tr>
+            <th><input type="checkbox" ng-click="vm.toggleAll()" ng-model="vm.isAllSelected"/>全选</th>
+            <th>礼品编号</th>
+            <th>礼品名称</th>
+            <th>单位</th>
+            <th data-ng-show="vm.stockStatus.type == 'output'">出库单价</th>
+            <th data-ng-show="vm.stockStatus.type == 'output'">出库数量</th>
+            <th data-ng-show="vm.stockStatus.type == 'output'">剩余库存</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="row in $data track by $index">
+            <td> <input type="checkbox" data-ng-model="row.selected" ng-change="vm.optionToggled()"/></td>
+            <td> {{row.id}} </td>
+            <td> {{row.name}} </td>
+            <td> {{row.unit}} </td>
+            <td data-ng-show="vm.stockStatus.type == 'output'"> {{row.purchasePrice}}</td>
+            <td data-ng-show="vm.stockStatus.type == 'output'"> {{row.storageOutAmount}}</td>
+            <td data-ng-show="vm.stockStatus.type == 'output'"> {{row.storageBalance}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer col-xs-3">
+    <button class="btn btn-primary btn-sm" type="button" data-ng-click="vm.save()">确认选择</button>
+    <button class="btn btn-primary btn-sm" type="button" ng-click="vm.close()">取消</button>
+  </div>
+</div>
+<!--
+</form>-->
