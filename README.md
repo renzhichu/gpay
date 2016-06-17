@@ -65,6 +65,7 @@ client
 执行项目之前,电脑需要配置以下环境:
 * `node` and `npm`
 `npm install` 安装所有依赖。由于公司暂时没有私有npm，所有将私有包放到了git仓库了，解压gr-ng-table.zip，然后移动到`node_modules`
+当后台接口没有提供时，本系统提供了一个本地的服务器以便更真实的模拟接口调用，请`git clone https://github.com/renzhichu/gserver.git`clone下代码，并进入到那个目录，安装那个仓库的说明启动服务
 
 ## Running the App
 执行 `gulp` 启动调试， 访问`http://127.0.0.1:3001/#/具体业务的path`进行访问，具体path详见下面的路由列表
