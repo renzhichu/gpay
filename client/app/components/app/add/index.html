@@ -65,27 +65,27 @@
 
         <!-- 应用icon-->
         <div class="form-group">
-          <label  class="col-sm-2 control-label"><span class="require-star">*</span>礼品图片：</label>
+          <label  class="col-sm-2 control-label"><span class="require-star">*</span>应用icon：</label>
           <div class="col-sm-10">
             <a href="javascript:void(0);" class="btn_addpic"
                ngf-select="vm.uploadFile($file, $invalidFiles)"
                accept="image/*" ngf-pattern="'.jpg,.jpeg,.png'"
-               ngf-min-width="640"
-               ngf-min-height="640"
-               ngf-max-size="5MB">
+               ngf-min-width="120"
+               ngf-min-height="120"
+               ngf-max-size="1MB">
               <span><i class="fa fa-plus-circle fa-lg"></i>上传图片</span>
-              <input type="file" tabindex="3" title="尺寸：640px*640px，单张图片小于5M，支持jpg、jpeg、png格式的图片" size="3"  class="fileprew" >
+              <input type="file" tabindex="3" title="尺寸：120px*120px，单张图片小于1M，支持jpg、jpeg、png格式的图片" size="3"  class="fileprew" >
             </a>
-            <span class="desc-info">尺寸：640px*640px，单张图片小于5M，支持jpg、jpeg、png格式的图片</span>
+            <span class="desc-info">尺寸：120px*120px，单张图片小于1M，支持jpg、jpeg、png格式的图片</span>
           </div>
         </div>
         <div class="form-group">
           <div class="col-sm-10 thumbnail-preview" >
-            <div class="thumbnails-group" data-ng-repeat="item in vm.giftInfo.pics">
+            <div class="thumbnails-group" data-ng-repeat="item in vm.formData.pics">
               <img ng-src="{{item.src}}" class="img-thumbnail">
               <div class="thumbnails-group-ico">
-                <a href="javascript:void(0)" title="左移动" data-ng-hide="$index == 0 && vm.giftInfo.pics.length == 1"  data-ng-click="vm.offsetLeft($index)" ><i class="fa fa-arrow-circle-left fa-lg"></i></a>
-                <a href="javascript:void(0)" title="右移动" data-ng-hide="$index == 0 && vm.giftInfo.pics.length == 1"  data-ng-click="vm.offsetRight($index)" ><i class="fa fa-arrow-circle-right fa-lg"></i></a>
+                <a href="javascript:void(0)" title="左移动" data-ng-hide="$index == 0 && vm.formData.pics.length == 1"  data-ng-click="vm.offsetLeft($index)" ><i class="fa fa-arrow-circle-left fa-lg"></i></a>
+                <a href="javascript:void(0)" title="右移动" data-ng-hide="$index == 0 && vm.formData.pics.length == 1"  data-ng-click="vm.offsetRight($index)" ><i class="fa fa-arrow-circle-right fa-lg"></i></a>
                 <a href="javascript:void(0)" title="删除"  data-ng-click="vm.delCur($index)"><i class="fa fa-trash-o fa-lg"></i></a>
               </div>
             </div>
@@ -101,7 +101,9 @@
             <select class="form-control"
                     ng-options="option.value for option in vm.sceneEnum  track by option.key"
                     ng-model="vm.formData.scene"></select>
+            <errormsg data-form-base="appForm" data-form-key="scene">接入方式不能为空</errormsg>
           </div>
+
         </div>
         <!--/接入方式 -->
 
@@ -109,7 +111,7 @@
         <!--按钮状态 -->
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary btn-sm" ng-switch="giftForm.form" ng-disabled="giftForm.$invalid || (vm.giftInfo.pics).length == 0">
+            <button type="submit" class="btn btn-primary btn-sm" ng-switch="appForm.form" ng-disabled="appForm.$invalid || (vm.formData.pics).length == 0">
               <span ng-switch-default> 创建新应用</span>
             </button>
             <button type="button" class="btn btn-primary btn-sm" data-ng-click="vm.resetForm()">重置</button>

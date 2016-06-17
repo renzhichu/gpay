@@ -16,15 +16,20 @@ import webpachHotMiddelware from 'webpack-hot-middleware';
 import colorsSupported      from 'supports-color';
 import minimist from 'minimist';
 
-let root = 'client';
+import globalConfig from './config/global';
+
+require('./tasks/lint');
+
+const basePath = globalConfig.basePath;
+const appPath = globalConfig.appPath;
 
 // helper method for resolving paths
 let resolveToApp = (glob = '') => {
-  return path.join(root, 'app', glob); // app/{glob}
+  return path.join(appPath, glob); // app/{glob}
 };
 
 let resolveToComponents = (glob = '') => {
-  return path.join(root, 'app/components', glob); // app/components/{glob}
+  return path.join(appPath, 'components', glob); // app/components/{glob}
 };
 
 // map of all paths
@@ -33,10 +38,10 @@ let paths = {
   styl: resolveToApp('**/*.styl'), // stylesheets
   html: [
     resolveToApp('**/*.html'),
-    path.join(root, 'index.html')
+    path.join(basePath, 'index.html')
   ],
-  entry: path.join(__dirname, root, 'app/app.js'),
-  output: root,
+  entry: globalConfig.basePath,
+  output: basePath,
   blankTemplates: path.join(__dirname, 'generator', 'component/**/*.**')
 };
 
@@ -54,7 +59,6 @@ gulp.task('webpack', (cb) => {
   );
   process.env.APP = options.app ;
   let config = require('./webpack.dist.config');
-  
   config.entry.app = paths.entry;
 
   webpack(config, (err, stats) => {
@@ -83,11 +87,10 @@ gulp.task('serve', () => {
   ];
 
   var compiler = webpack(config);
-
   serve({
     port: process.env.PORT || 3000,
     open: false,
-    server: {baseDir: root},
+    server: {baseDir: basePath},
     middleware: [
       webpackDevMiddelware(compiler, {
         stats: {

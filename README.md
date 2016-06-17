@@ -1,17 +1,19 @@
 * [项目介绍](#walkthrough)
     * [项目构建](#build-system)
     * [项目结构](#file-structure)
-    * [Testing Setup](#testing-setup)
 * [开始开发](#getting-started)
     * [项目依赖](#dependencies)
     * [项目运行](#running-the-app)
         * [Gulp Tasks](#gulp-tasks)
         * [Testing](#testing)
+    * [静态代码检查](#lint-the-app)
+    * [单元测试](#testing-setup)
     * [生成模版](#generating-components)    
 
 # Walkthrough
 ## Build System
 项目基于webpack gulp构建工作
+全局安装 `sudo npm i -g gulp webpack eslint babel less karma karma-cli`
 
 `Webpack` 处理文件依赖:
 * 采用 `Babel` 编译js代码 ES6 to ES5 

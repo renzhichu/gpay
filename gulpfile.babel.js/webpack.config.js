@@ -2,9 +2,14 @@ var path    = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
+import globalConfig from './config/global';
+
+const appPath = globalConfig.appPath;
+
 module.exports = {
-  //devtool: 'sourcemap',
-  entry: {},
+  devtool: 'sourcemap',
+  entry: {
+  },
   module: {
     loaders: [
       { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'ng-annotate!babel' },
@@ -25,7 +30,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'client/index.html',
+      template: path.join(appPath, 'index.html'),
       inject: 'body',
       hash: true
     }),

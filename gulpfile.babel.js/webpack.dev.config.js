@@ -2,10 +2,13 @@ var webpack = require('webpack');
 var path    = require('path');
 var config  = require('./webpack.config');
 
+import globalConfig from './config/global';
+const basePath = globalConfig.basePath;
+
 config.output = {
   filename: '[name].bundle.js',
   publicPath: '/',
-  path: path.resolve(__dirname, 'client')
+  path: basePath
 };
 
 config.plugins = config.plugins.concat([

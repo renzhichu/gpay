@@ -72,6 +72,8 @@ export default angular
 
     };
 
+    api.basePath = basePath();
+
     return api;
 
   })

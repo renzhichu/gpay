@@ -3,14 +3,14 @@
  * 订单增加
  */
 class AddController {
-  constructor($scope,$location,orderSvc,commonSvc,enumSvc) {
+  constructor($scope,$location,appSvc,commonSvc,enumSvc) {
     'ngInject';
     /**
      * 注入依赖的服务
      */
     this.$scope    = $scope;
     this.$location = $location;
-    this.orderSvc   = orderSvc;
+    this.appSvc   = appSvc;
     this.enumSvc  = enumSvc;
     this.commonSvc = commonSvc;
 
@@ -47,31 +47,15 @@ class AddController {
 
     this.resetForm();
 
-    this.enumSvc
-      .get({
-        enumType:'giftStatus'
-      })
-      .then(data=>{
-        this.giftStatus = data && data.giftStatus;
-      })
-
-    this.enumSvc
-      .get({
-        enumType:'giftUnit'
-      })
-      .then(data=>{
-        this.giftUnit = data && data.giftUnit;
-      })
   }
 
   /**
    * 图片上传前端错误catch
-   * todo.. 放在这里不是很帅..
    */
   catchErrFileError(errFile){
 
     //上传数量总线制
-    if(this.giftInfo.pics && this.giftInfo.pics.length>4){
+    if(this.formData.pics && this.formData.pics.length>4){
       return {
         data:true,
         msg:'上传图片最大数量为5张'
@@ -94,19 +78,19 @@ class AddController {
         case 'minWidth':
           errInfo = {
             data:true,
-            msg:'上传的图片最小宽高为 640*640'
+            msg:'上传的图片最小宽高为 120*120'
           };
           break;
         case 'minHeight':
           errInfo = {
             data:true,
-            msg:'上传的图片最小宽高为 640*640'
+            msg:'上传的图片最小宽高为 120*120'
           };
           break;
         case 'maxSize':
           errInfo = {
             data:true,
-            msg:'上传图片最大的值为5M'
+            msg:'上传图片最大的值为1M'
           };
           break;
         default:
@@ -133,21 +117,37 @@ class AddController {
     if (!!file) {
       let options = {
         fileName:file,
-        fileSize: 5242880,
+        fileSize: 1048576,
         fileType:angular.toJson(['jpg','jpeg','png']),
         width:file && file.$ngfWidth,
         height:file && file.$ngfHeight,
-        minWidth:640,
-        minHeight:640
+        minWidth:120,
+        minHeight:120
       };
+
+      console.log(file)
 
       this.commonSvc
         .upload(options)
         .then(response=>{
           if(response){
-            this.giftInfo.pics.push({
-              src:response && response.data && response.data.url
-            });
+
+            /* 上传接口未提供读取本地图片 */
+            var reader = new FileReader();  
+            reader.onload = function(e) {  
+                this.formData.pics.push({
+                  src: e.target.result
+                }); 
+            }.bind(this);  
+            reader.readAsDataURL(file);  
+            /* 上传接口未提供读取本地图片 */
+
+            /* 上传接口未提供读取服务器给的图片地址 */
+            /*this.formData.pics.push({
+              src: file
+            });*/
+            /* 上传接口未提供读取服务器给的图片地址 */
+
           }
         });
     };
@@ -158,15 +158,15 @@ class AddController {
    * @param curIndex
    */
   offsetLeft(curIndex){
-    let curVal = this.giftInfo.pics[curIndex];
+    let curVal = this.formData.pics[curIndex];
     if(curIndex == 0 ){
-      let nextVal = this.giftInfo.pics[this.giftInfo.pics.length - 1];
-      this.giftInfo.pics[curIndex] =  nextVal;
-      this.giftInfo.pics[this.giftInfo.pics.length - 1]  =  curVal;
+      let nextVal = this.formData.pics[this.formData.pics.length - 1];
+      this.formData.pics[curIndex] =  nextVal;
+      this.formData.pics[this.formData.pics.length - 1]  =  curVal;
     }else{
-      let nextVal = this.giftInfo.pics[curIndex - 1];
-      this.giftInfo.pics[curIndex - 1] =  curVal;
-      this.giftInfo.pics[curIndex]     =  nextVal;
+      let nextVal = this.formData.pics[curIndex - 1];
+      this.formData.pics[curIndex - 1] =  curVal;
+      this.formData.pics[curIndex]     =  nextVal;
     }
   }
 
@@ -175,15 +175,15 @@ class AddController {
    * @param curIndex
    */
   offsetRight(curIndex) {
-    let curVal =this.giftInfo.pics[curIndex];
-    if(curIndex + 1 == (this.giftInfo.pics && this.giftInfo.pics.length)){
-      let nextVal = this.giftInfo.pics[0];
-      this.giftInfo.pics[0] =  curVal;
-      this.giftInfo.pics[curIndex]     =  nextVal;
+    let curVal =this.formData.pics[curIndex];
+    if(curIndex + 1 == (this.formData.pics && this.formData.pics.length)){
+      let nextVal = this.formData.pics[0];
+      this.formData.pics[0] =  curVal;
+      this.formData.pics[curIndex]     =  nextVal;
     }else{
-      let nextVal = this.giftInfo.pics[curIndex + 1];
-      this.giftInfo.pics[curIndex + 1] =  curVal;
-      this.giftInfo.pics[curIndex]     =  nextVal;
+      let nextVal = this.formData.pics[curIndex + 1];
+      this.formData.pics[curIndex + 1] =  curVal;
+      this.formData.pics[curIndex]     =  nextVal;
     }
   }
 
@@ -192,7 +192,7 @@ class AddController {
    * @param curIndex
    */
   delCur(curIndex){
-    this.giftInfo.pics.splice(curIndex,1);
+    this.formData.pics.splice(curIndex,1);
   }
 
   /**
@@ -200,7 +200,7 @@ class AddController {
    * @returns {Array}
      */
   setPicsParams(){
-    let pics = this.giftInfo.pics,
+    let pics = this.formData.pics,
         picsName = [];
     angular.forEach(pics,(item)=>{
       let url = item && item.src,
@@ -225,7 +225,8 @@ class AddController {
       name: '',
       appType: 1,
       description: '',
-      scene: 0
+      scene: 0,
+      pics: []
     };
   }
 
@@ -233,22 +234,16 @@ class AddController {
    * 增加礼品
    */
   add(){
-    let params = angular.extend(angular.copy(this.giftInfo) || {},
+    let params = angular.extend(angular.copy(this.formData) || {},
       {
         pics:angular.toJson(this.setPicsParams())
-      },
-      {
-        unit: this.giftInfo.unit && this.giftInfo.unit['key'] || ''
-      },
-      {
-        status:this.giftInfo.status && this.giftInfo.status.key || ''
       } 
     );
-    this.giftSvc
+    this.appSvc
       .add(params)
       .then(()=>{
         alert('添加成功');
-        this.$location.url('/gift/list');
+        this.$location.url('/order/list');
       });
   }
 }
