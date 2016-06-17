@@ -5,7 +5,7 @@ import Components from './components/components';
 import AppComponent from './app.component';
 import uibs from 'angular-ui-bootstrap';
 import ngMessages from 'angular-messages';
-import ffanNgtable from 'ffan-ng-table';
+import ffanNgtable from 'gr-ng-table';
 import ngFileUpload from 'ng-file-upload';
 import 'jquery';
 import 'bootstrap';

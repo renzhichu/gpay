@@ -5,12 +5,12 @@
     * [项目依赖](#dependencies)
     * [项目运行](#running-the-app)
         * [Gulp Tasks](#gulp-tasks)
-        * [Testing](#testing)
     * [静态代码检查](#lint-the-app)
     * [单元测试](#testing-setup)
-    * [生成模版](#generating-components)    
+    * [生成模版](#generating-components)  
+* [路由列表](#router)
 
-# Walkthrough
+# 果仁支付
 ## Build System
 项目基于webpack gulp构建工作
 全局安装 `sudo npm i -g gulp webpack eslint babel less karma karma-cli`
@@ -64,12 +64,10 @@ client
 ## Dependencies
 执行项目之前,电脑需要配置以下环境:
 * `node` and `npm`
-第一次执行时确认本机有以下安装包:  
-`npm install -g gulp karma karma-cli webpack`
-`npm install` 安装所有依赖
+`npm install` 安装所有依赖。由于公司暂时没有私有npm，所有将私有包放到了git仓库了，解压gr-ng-table.zip，然后移动到`node_modules`
 
 ## Running the App
-执行 `gulp` 启动调试
+执行 `gulp` 启动调试， 访问`http://127.0.0.1:3001/#/具体业务的path`进行访问，具体path详见下面的路由列表
  
 ### Gulp Tasks
 * `webpack`
@@ -78,8 +76,11 @@ client
   * 执行 `gulp` 启动本地调试.
 * `component`
   * 执行 `gulp component` 生成一个项目模块模版. [Read below](#generating-components) 获取更多信息.
-  
-### Testing
+
+## 静态代码检查
+执行 `gulp lint`
+
+## Testing
 执行 `npm test`.
 
 ### Generating Components
@@ -104,5 +105,10 @@ client
 
 生成一个公共模块 执行 `gulp component --name commonheader --parent ../common` 就创建了BP后台的公共头部 `client/app/common/footer`.  
 
+## router
+
+所有的路由
+* order/list 订单列表
+* app/add 添加新应用
 
 有其他任何问题联系 `刘炳礼 liubingli@new4g.cn`
